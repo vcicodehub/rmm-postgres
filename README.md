@@ -23,7 +23,7 @@ Database dump is now in your local volume <project_dir>/postgres-data
 ```
 > docker-compose up -d
 verify the db is running...
-> docker exec rmm-postgres-main_buckeyes_1 /var/lib/postgresql/data/restore_db.sh
+> docker exec rmm-postgres-main_buckeyes_1 /var/lib/postgresql/restore_db.sh
 ```
 
 ## Start Database
