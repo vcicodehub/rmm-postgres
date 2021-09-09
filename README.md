@@ -25,18 +25,16 @@ Create data dump
 > cd ~
 > pg_dump rmm > rmm.db.dat
 > cp rmm.db.dat /var/lib/postgresql
-Database dump is now in your local volume <project_dir>/postgres-data
+Database dump is now in your local volume
 ```
 ```
 Restore data dump
 > su postgres
 > cd ~
 > psql rmm < /var/lib/postgresql/rmm.db.dat
-Database dump is now in your local volume <project_dir>/postgres-data
 ```
 ```
 Copy tables from on db to another db
 > su postgres
 > pg_dump -a -t rmm_order rmm | psql rmm_orders
-Database dump is now in your local volume <project_dir>/postgres-data
 ```
