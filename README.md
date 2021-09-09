@@ -20,7 +20,7 @@ verify the db is running...
 ## Database Dump/Restore
 These commands are here for reference only...
 ```
-Connect to PostgreSQL within Docker
+Create data dump
 > su postgres
 > cd ~
 > pg_dump rmm > rmm.db.dat
@@ -28,9 +28,15 @@ Connect to PostgreSQL within Docker
 Database dump is now in your local volume <project_dir>/postgres-data
 ```
 ```
-Connect to PostgreSQL within Docker
+Restore data dump
 > su postgres
 > cd ~
 > psql rmm < /var/lib/postgresql/rmm.db.dat
+Database dump is now in your local volume <project_dir>/postgres-data
+```
+```
+Copy tables from on db to another db
+> su postgres
+> pg_dump -a -t rmm_order rmm | psql rmm_orders
 Database dump is now in your local volume <project_dir>/postgres-data
 ```
