@@ -1,33 +1,6 @@
-create table "rmm_role" (
-  "rmm_role_id" SERIAL PRIMARY KEY,
-  "ro_name" varchar(500),
-  "ro_status" varchar(100),
-  "ro_add_user_id" varchar(500),
-  "ro_add_date" date,
-  "ro_mtc_user_id" varchar(500),
-  "ro_mtc_date" date
-);
-
-create table "rmm_shop" (
-  "rmm_shop_id" SERIAL PRIMARY KEY,
-  "s_number" varchar(100),
-  "s_store_number" varchar(100),
-  "s_name" varchar(1000),
-  "s_addr_line1" varchar(500),
-  "s_addr_line2" varchar(500),
-  "s_addr_city" varchar(500),
-  "s_addr_state" varchar(3),
-  "s_addr_zip" varchar(10),
-  "s_status" varchar(100),
-  "s_add_user_id" varchar(500),
-  "s_add_date" date,
-  "s_mtc_user_id" varchar(500),
-  "s_mtc_date" date
-);
-
 create table "rmm_inventory_report" (
   "rmm_inventory_report_id" SERIAL PRIMARY KEY,
-  "rmm_shop_id" SERIAL REFERENCES rmm_shop("rmm_shop_id"),
+  "rmm_shop_id" SERIAL,
   "ir_status" varchar(100),
   "ir_diamonds_cost" decimal,
   "ir_asst_dia_bags_cost" decimal,
@@ -69,40 +42,6 @@ create table "rmm_inventory_report" (
   "ir_previous_total" decimal
 );
 
-create table "rmm_vendor" (
-  "rmm_vendor_id" SERIAL PRIMARY KEY,
-  "v_type" varchar(100),
-  "v_status" varchar(100),
-  "v_number" varchar(100),
-  "v_name" varchar(1000),
-  "v_email_addr" varchar(500),
-  "v_addr_line1" varchar(500),
-  "v_addr_line2" varchar(500),
-  "v_addr_city" varchar(500),
-  "v_addr_state" varchar(3),
-  "v_addr_zip" varchar(10),
-  "v_order_method" varchar(100),
-  "v_cadcam" char(1),
-  "v_payterm_discount" decimal,
-  "v_payterm_net_date" date,
-  "v_payterm_net_days" decimal,
-  "v_add_user_id" varchar(500),
-  "v_add_date" date,
-  "v_mtc_user_id" varchar(500),
-  "v_mtc_date" date
-);
-
-create table "rmm_user" (
-  "rmm_user_id" varchar(500) PRIMARY KEY,
-  "u_name" varchar(500),
-  "u_password" varchar(200),
-  "u_status" varchar(100),
-  "u_add_user_id" varchar(500),
-  "u_add_date" date,
-  "u_mtc_user_id" varchar(500),
-  "u_mtc_date" date
-);
-
 create table "rmm_supply_categories" (
   "rmm_supply_categories_id" SERIAL PRIMARY KEY,
   "sc_category" varchar(200),
@@ -139,9 +78,9 @@ create table "rmm_product" (
 
 create table "rmm_order" (
   "rmm_order_id" SERIAL PRIMARY KEY,
-  "rmm_user_id" varchar(500) REFERENCES rmm_user("rmm_user_id"),
-  "rmm_shop_id" SERIAL REFERENCES rmm_shop("rmm_shop_id"),
-  "rmm_vendor_id" SERIAL REFERENCES rmm_vendor("rmm_vendor_id"),
+  "rmm_user_id" varchar(500),
+  "rmm_shop_id" SERIAL,
+  "rmm_vendor_id" SERIAL,
   "o_number" varchar(100),
   "o_type" varchar(100),
   "o_date" date,
@@ -233,35 +172,9 @@ create table "rmm_invoice_line_item" (
   "ili_mtc_date" date
 );
 
-create table "rmm_events" (
-  "rmm_event_id" SERIAL PRIMARY KEY,
-  "rmm_user_id" varchar(500),
-  "e_date" date,
-  "e_type" varchar(500),
-  "e_type_id" decimal,
-  "e_title" varchar(500),
-  "e_description" varchar(4000),
-  "e_add_user_id" varchar(500),
-  "e_add_date" date,
-  "e_mtc_user_id" varchar(500),
-  "e_mtc_date" date
-);
-
-create table "rmm_user_role" (
-  "rmm_user_id" varchar(500) REFERENCES rmm_user("rmm_user_id"),
-  "rmm_role_id" SERIAL REFERENCES rmm_role("rmm_role_id"),
-  "ur_value" varchar(1000),
-  "ur_status" varchar(100),
-  "ur_add_user_id" varchar(500),
-  "ur_add_date" date,
-  "ur_mtc_user_id" varchar(500),
-  "ur_mtc_date" date,
-  PRIMARY KEY(rmm_user_id, rmm_role_id)
-);
-
 create table "rmm_shop_inventory" (
   "rmm_shop_inventory_id" SERIAL PRIMARY KEY,
-  "rmm_shop_id" SERIAL REFERENCES rmm_shop("rmm_shop_id"),
+  "rmm_shop_id" SERIAL,
   "si_status" varchar(100),
   "si_add_user_id" varchar(500),
   "si_add_date" date,
