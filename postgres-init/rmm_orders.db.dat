@@ -34,12 +34,24 @@ CREATE TABLE public.rmm_inventory_report (
     ir_created_colored_cost numeric,
     ir_synthetic_colored_cost numeric,
     ir_pearls_cost numeric,
-    ir_gold_stock_cost numeric,
-    ir_gold_stock_count numeric,
-    ir_gold_solder_cost numeric,
-    ir_gold_solder_count numeric,
-    ir_gold_casting_grain_cost numeric,
-    ir_gold_casting_grain_count numeric,
+    "ir_gold_stock_10K_cost" numeric,
+    "ir_gold_stock_10K_count" numeric,
+    "ir_gold_stock_14K_cost" numeric,
+    "ir_gold_stock_14K_count" numeric,
+    "ir_gold_stock_18K_cost" numeric,
+    "ir_gold_stock_18K_count" numeric,
+    "ir_gold_solder_10K_cost" numeric,
+    "ir_gold_solder_10K_count" numeric,
+    "ir_gold_solder_14K_cost" numeric,
+    "ir_gold_solder_14K_count" numeric,
+    "ir_gold_solder_18K_cost" numeric,
+    "ir_gold_solder_18K_count" numeric,
+    "ir_gold_casting_grain_10K_cost" numeric,
+    "ir_gold_casting_grain_10K_count" numeric,
+    "ir_gold_casting_grain_14K_cost" numeric,
+    "ir_gold_casting_grain_14K_count" numeric,
+    "ir_gold_casting_grain_18K_cost" numeric,
+    "ir_gold_casting_grain_18K_count" numeric,
     ir_platinum_stock_cost numeric,
     ir_platinum_stock_count numeric,
     ir_platinum_solder_cost numeric,
@@ -122,8 +134,8 @@ ALTER SEQUENCE public.rmm_inventory_report_rmm_shop_id_seq OWNED BY public.rmm_i
 CREATE TABLE public.rmm_invoice (
     rmm_invoice_id integer NOT NULL,
     rmm_order_id integer NOT NULL,
+    i_number character varying(200),
     i_status character varying(200),
-    i_description character varying(2000),
     i_date date,
     i_grand_total numeric,
     i_sent_to_sap character(1),
@@ -145,13 +157,11 @@ ALTER TABLE public.rmm_invoice OWNER TO postgres;
 CREATE TABLE public.rmm_invoice_line_item (
     rmm_invoice_line_item_id integer NOT NULL,
     rmm_invoice_id integer NOT NULL,
-    rmm_order_line_item_id integer NOT NULL,
     rmm_product_id integer NOT NULL,
     ili_description character varying(2000),
     ili_line_num numeric,
     ili_cost numeric,
     ili_quantity numeric,
-    ili_tax_amount numeric,
     ili_total_amount numeric,
     ili_add_user_id character varying(500),
     ili_add_date date,
@@ -204,28 +214,6 @@ ALTER TABLE public.rmm_invoice_line_item_rmm_invoice_line_item_id_seq OWNER TO p
 --
 
 ALTER SEQUENCE public.rmm_invoice_line_item_rmm_invoice_line_item_id_seq OWNED BY public.rmm_invoice_line_item.rmm_invoice_line_item_id;
-
-
---
--- Name: rmm_invoice_line_item_rmm_order_line_item_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.rmm_invoice_line_item_rmm_order_line_item_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.rmm_invoice_line_item_rmm_order_line_item_id_seq OWNER TO postgres;
-
---
--- Name: rmm_invoice_line_item_rmm_order_line_item_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.rmm_invoice_line_item_rmm_order_line_item_id_seq OWNED BY public.rmm_invoice_line_item.rmm_order_line_item_id;
 
 
 --
@@ -576,11 +564,8 @@ ALTER TABLE public.rmm_receipt OWNER TO postgres;
 CREATE TABLE public.rmm_receipt_line_item (
     rmm_receipt_line_item_id integer NOT NULL,
     rmm_receipt_id integer NOT NULL,
-    rmm_order_line_item_id integer NOT NULL,
-    rli_date date,
-    rli_status character varying(100),
+    rmm_product_id integer NOT NULL,
     rli_quantity numeric,
-    rli_uom character varying(100),
     rli_add_user_id character varying(500),
     rli_add_date date,
     rli_mtc_user_id character varying(500),
@@ -591,10 +576,10 @@ CREATE TABLE public.rmm_receipt_line_item (
 ALTER TABLE public.rmm_receipt_line_item OWNER TO postgres;
 
 --
--- Name: rmm_receipt_line_item_rmm_order_line_item_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: rmm_receipt_line_item_rmm_product_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.rmm_receipt_line_item_rmm_order_line_item_id_seq
+CREATE SEQUENCE public.rmm_receipt_line_item_rmm_product_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -603,13 +588,13 @@ CREATE SEQUENCE public.rmm_receipt_line_item_rmm_order_line_item_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.rmm_receipt_line_item_rmm_order_line_item_id_seq OWNER TO postgres;
+ALTER TABLE public.rmm_receipt_line_item_rmm_product_id_seq OWNER TO postgres;
 
 --
--- Name: rmm_receipt_line_item_rmm_order_line_item_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: rmm_receipt_line_item_rmm_product_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public.rmm_receipt_line_item_rmm_order_line_item_id_seq OWNED BY public.rmm_receipt_line_item.rmm_order_line_item_id;
+ALTER SEQUENCE public.rmm_receipt_line_item_rmm_product_id_seq OWNED BY public.rmm_receipt_line_item.rmm_product_id;
 
 
 --
@@ -707,6 +692,8 @@ ALTER SEQUENCE public.rmm_receipt_rmm_receipt_id_seq OWNED BY public.rmm_receipt
 CREATE TABLE public.rmm_shop_inventory (
     rmm_shop_inventory_id integer NOT NULL,
     rmm_shop_id integer NOT NULL,
+    rmm_product_id integer NOT NULL,
+    si_quantity numeric,
     si_status character varying(100),
     si_add_user_id character varying(500),
     si_add_date date,
@@ -718,28 +705,10 @@ CREATE TABLE public.rmm_shop_inventory (
 ALTER TABLE public.rmm_shop_inventory OWNER TO postgres;
 
 --
--- Name: rmm_shop_inventory_product; Type: TABLE; Schema: public; Owner: postgres
+-- Name: rmm_shop_inventory_rmm_product_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.rmm_shop_inventory_product (
-    rmm_product_id integer NOT NULL,
-    rmm_shop_inventory_id integer NOT NULL,
-    sip_count numeric,
-    sip_status character varying(100),
-    sip_add_user_id character varying(500),
-    sip_add_date date,
-    sip_mtc_user_id character varying(500),
-    sip_mtc_date date
-);
-
-
-ALTER TABLE public.rmm_shop_inventory_product OWNER TO postgres;
-
---
--- Name: rmm_shop_inventory_product_rmm_product_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.rmm_shop_inventory_product_rmm_product_id_seq
+CREATE SEQUENCE public.rmm_shop_inventory_rmm_product_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -748,35 +717,13 @@ CREATE SEQUENCE public.rmm_shop_inventory_product_rmm_product_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.rmm_shop_inventory_product_rmm_product_id_seq OWNER TO postgres;
+ALTER TABLE public.rmm_shop_inventory_rmm_product_id_seq OWNER TO postgres;
 
 --
--- Name: rmm_shop_inventory_product_rmm_product_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: rmm_shop_inventory_rmm_product_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public.rmm_shop_inventory_product_rmm_product_id_seq OWNED BY public.rmm_shop_inventory_product.rmm_product_id;
-
-
---
--- Name: rmm_shop_inventory_product_rmm_shop_inventory_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.rmm_shop_inventory_product_rmm_shop_inventory_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.rmm_shop_inventory_product_rmm_shop_inventory_id_seq OWNER TO postgres;
-
---
--- Name: rmm_shop_inventory_product_rmm_shop_inventory_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.rmm_shop_inventory_product_rmm_shop_inventory_id_seq OWNED BY public.rmm_shop_inventory_product.rmm_shop_inventory_id;
+ALTER SEQUENCE public.rmm_shop_inventory_rmm_product_id_seq OWNED BY public.rmm_shop_inventory.rmm_product_id;
 
 
 --
@@ -907,13 +854,6 @@ ALTER TABLE ONLY public.rmm_invoice_line_item ALTER COLUMN rmm_invoice_id SET DE
 
 
 --
--- Name: rmm_invoice_line_item rmm_order_line_item_id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.rmm_invoice_line_item ALTER COLUMN rmm_order_line_item_id SET DEFAULT nextval('public.rmm_invoice_line_item_rmm_order_line_item_id_seq'::regclass);
-
-
---
 -- Name: rmm_invoice_line_item rmm_product_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1005,10 +945,10 @@ ALTER TABLE ONLY public.rmm_receipt_line_item ALTER COLUMN rmm_receipt_id SET DE
 
 
 --
--- Name: rmm_receipt_line_item rmm_order_line_item_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: rmm_receipt_line_item rmm_product_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.rmm_receipt_line_item ALTER COLUMN rmm_order_line_item_id SET DEFAULT nextval('public.rmm_receipt_line_item_rmm_order_line_item_id_seq'::regclass);
+ALTER TABLE ONLY public.rmm_receipt_line_item ALTER COLUMN rmm_product_id SET DEFAULT nextval('public.rmm_receipt_line_item_rmm_product_id_seq'::regclass);
 
 
 --
@@ -1026,17 +966,10 @@ ALTER TABLE ONLY public.rmm_shop_inventory ALTER COLUMN rmm_shop_id SET DEFAULT 
 
 
 --
--- Name: rmm_shop_inventory_product rmm_product_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: rmm_shop_inventory rmm_product_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.rmm_shop_inventory_product ALTER COLUMN rmm_product_id SET DEFAULT nextval('public.rmm_shop_inventory_product_rmm_product_id_seq'::regclass);
-
-
---
--- Name: rmm_shop_inventory_product rmm_shop_inventory_id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.rmm_shop_inventory_product ALTER COLUMN rmm_shop_inventory_id SET DEFAULT nextval('public.rmm_shop_inventory_product_rmm_shop_inventory_id_seq'::regclass);
+ALTER TABLE ONLY public.rmm_shop_inventory ALTER COLUMN rmm_product_id SET DEFAULT nextval('public.rmm_shop_inventory_rmm_product_id_seq'::regclass);
 
 
 --
@@ -1050,7 +983,7 @@ ALTER TABLE ONLY public.rmm_supply_categories ALTER COLUMN rmm_supply_categories
 -- Data for Name: rmm_inventory_report; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.rmm_inventory_report (rmm_inventory_report_id, rmm_shop_id, ir_status, ir_diamonds_cost, ir_asst_dia_bags_cost, ir_genuine_colored_cost, ir_created_colored_cost, ir_synthetic_colored_cost, ir_pearls_cost, ir_gold_stock_cost, ir_gold_stock_count, ir_gold_solder_cost, ir_gold_solder_count, ir_gold_casting_grain_cost, ir_gold_casting_grain_count, ir_platinum_stock_cost, ir_platinum_stock_count, ir_platinum_solder_cost, ir_platinum_solder_count, ir_gold_findings_cost, ir_gold_findings_count, ir_platinum_findings_cost, ir_platinum_findings_count, ir_silver_stock_cost, ir_silver_stock_count, ir_silver_solder_cost, ir_silver_solder_count, ir_silver_casting_grain_cost, ir_silver_casting_grain_count, ir_silver_findings_cost, ir_silver_findings_count, ir_total, ir_completion_date, ir_shop_approval_status, ir_dm_approval_status, ir_op_approval_status, ir_run_date, ir_variance_total, ir_fiscal_mmyyyy, ir_inv_total, ir_previous_total) FROM stdin;
+COPY public.rmm_inventory_report (rmm_inventory_report_id, rmm_shop_id, ir_status, ir_diamonds_cost, ir_asst_dia_bags_cost, ir_genuine_colored_cost, ir_created_colored_cost, ir_synthetic_colored_cost, ir_pearls_cost, "ir_gold_stock_10K_cost", "ir_gold_stock_10K_count", "ir_gold_stock_14K_cost", "ir_gold_stock_14K_count", "ir_gold_stock_18K_cost", "ir_gold_stock_18K_count", "ir_gold_solder_10K_cost", "ir_gold_solder_10K_count", "ir_gold_solder_14K_cost", "ir_gold_solder_14K_count", "ir_gold_solder_18K_cost", "ir_gold_solder_18K_count", "ir_gold_casting_grain_10K_cost", "ir_gold_casting_grain_10K_count", "ir_gold_casting_grain_14K_cost", "ir_gold_casting_grain_14K_count", "ir_gold_casting_grain_18K_cost", "ir_gold_casting_grain_18K_count", ir_platinum_stock_cost, ir_platinum_stock_count, ir_platinum_solder_cost, ir_platinum_solder_count, ir_gold_findings_cost, ir_gold_findings_count, ir_platinum_findings_cost, ir_platinum_findings_count, ir_silver_stock_cost, ir_silver_stock_count, ir_silver_solder_cost, ir_silver_solder_count, ir_silver_casting_grain_cost, ir_silver_casting_grain_count, ir_silver_findings_cost, ir_silver_findings_count, ir_total, ir_completion_date, ir_shop_approval_status, ir_dm_approval_status, ir_op_approval_status, ir_run_date, ir_variance_total, ir_fiscal_mmyyyy, ir_inv_total, ir_previous_total) FROM stdin;
 \.
 
 
@@ -1058,7 +991,7 @@ COPY public.rmm_inventory_report (rmm_inventory_report_id, rmm_shop_id, ir_statu
 -- Data for Name: rmm_invoice; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.rmm_invoice (rmm_invoice_id, rmm_order_id, i_status, i_description, i_date, i_grand_total, i_sent_to_sap, i_sent_to_sap_date, i_pay_to_sap, i_add_user_id, i_add_date, i_mtc_user_id, i_mtc_date) FROM stdin;
+COPY public.rmm_invoice (rmm_invoice_id, rmm_order_id, i_number, i_status, i_date, i_grand_total, i_sent_to_sap, i_sent_to_sap_date, i_pay_to_sap, i_add_user_id, i_add_date, i_mtc_user_id, i_mtc_date) FROM stdin;
 \.
 
 
@@ -1066,7 +999,7 @@ COPY public.rmm_invoice (rmm_invoice_id, rmm_order_id, i_status, i_description, 
 -- Data for Name: rmm_invoice_line_item; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.rmm_invoice_line_item (rmm_invoice_line_item_id, rmm_invoice_id, rmm_order_line_item_id, rmm_product_id, ili_description, ili_line_num, ili_cost, ili_quantity, ili_tax_amount, ili_total_amount, ili_add_user_id, ili_add_date, ili_mtc_user_id, ili_mtc_date) FROM stdin;
+COPY public.rmm_invoice_line_item (rmm_invoice_line_item_id, rmm_invoice_id, rmm_product_id, ili_description, ili_line_num, ili_cost, ili_quantity, ili_total_amount, ili_add_user_id, ili_add_date, ili_mtc_user_id, ili_mtc_date) FROM stdin;
 \.
 
 
@@ -1075,9 +1008,6 @@ COPY public.rmm_invoice_line_item (rmm_invoice_line_item_id, rmm_invoice_id, rmm
 --
 
 COPY public.rmm_order (rmm_order_id, rmm_user_id, rmm_shop_id, rmm_vendor_id, o_number, o_type, o_date, o_status, o_store_comment, o_is_received, o_is_delivered, o_repair_job_num, o_approved_by, o_approved_by_date, o_add_user_id, o_add_date, o_mtc_user_id, o_mtc_date) FROM stdin;
-2	foo	77	1	1100	VENDOR	2021-08-29	ACTIVE	Need these ASAP!	N	N	797	Megan	2021-08-29	\N	2021-09-02	\N	2021-09-02
-3	foo	77	1	1100	VENDOR	2021-08-29	ACTIVE	Need these ASAP!	N	N	797	Megan	2021-08-29	\N	2021-09-02	\N	2021-09-02
-4	foo	77	1	1100	VENDOR	2021-08-29	ACTIVE	Need these ASAP!	N	N	797	Megan	2021-08-29	\N	2021-09-02	\N	2021-09-02
 \.
 
 
@@ -1109,7 +1039,7 @@ COPY public.rmm_receipt (rmm_receipt_id, rmm_order_id, r_date, r_status, r_add_u
 -- Data for Name: rmm_receipt_line_item; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.rmm_receipt_line_item (rmm_receipt_line_item_id, rmm_receipt_id, rmm_order_line_item_id, rli_date, rli_status, rli_quantity, rli_uom, rli_add_user_id, rli_add_date, rli_mtc_user_id, rli_mtc_date) FROM stdin;
+COPY public.rmm_receipt_line_item (rmm_receipt_line_item_id, rmm_receipt_id, rmm_product_id, rli_quantity, rli_add_user_id, rli_add_date, rli_mtc_user_id, rli_mtc_date) FROM stdin;
 \.
 
 
@@ -1117,15 +1047,7 @@ COPY public.rmm_receipt_line_item (rmm_receipt_line_item_id, rmm_receipt_id, rmm
 -- Data for Name: rmm_shop_inventory; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.rmm_shop_inventory (rmm_shop_inventory_id, rmm_shop_id, si_status, si_add_user_id, si_add_date, si_mtc_user_id, si_mtc_date) FROM stdin;
-\.
-
-
---
--- Data for Name: rmm_shop_inventory_product; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.rmm_shop_inventory_product (rmm_product_id, rmm_shop_inventory_id, sip_count, sip_status, sip_add_user_id, sip_add_date, sip_mtc_user_id, sip_mtc_date) FROM stdin;
+COPY public.rmm_shop_inventory (rmm_shop_inventory_id, rmm_shop_id, rmm_product_id, si_quantity, si_status, si_add_user_id, si_add_date, si_mtc_user_id, si_mtc_date) FROM stdin;
 \.
 
 
@@ -1134,7 +1056,6 @@ COPY public.rmm_shop_inventory_product (rmm_product_id, rmm_shop_inventory_id, s
 --
 
 COPY public.rmm_supply_categories (rmm_supply_categories_id, sc_category, sc_description, sc_bulk_item, sc_cost, sc_add_user_id, sc_add_date, sc_mtc_user_id, sc_mtc_date) FROM stdin;
-1	GOLD	Gold Stock	Y	100.10	SYSTEM	2021-09-02	SYSTEM	2021-09-02
 \.
 
 
@@ -1164,13 +1085,6 @@ SELECT pg_catalog.setval('public.rmm_invoice_line_item_rmm_invoice_id_seq', 1, f
 --
 
 SELECT pg_catalog.setval('public.rmm_invoice_line_item_rmm_invoice_line_item_id_seq', 1, false);
-
-
---
--- Name: rmm_invoice_line_item_rmm_order_line_item_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.rmm_invoice_line_item_rmm_order_line_item_id_seq', 1, false);
 
 
 --
@@ -1205,7 +1119,7 @@ SELECT pg_catalog.setval('public.rmm_order_line_item_rmm_order_id_seq', 1, false
 -- Name: rmm_order_line_item_rmm_order_line_item_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.rmm_order_line_item_rmm_order_line_item_id_seq', 3, true);
+SELECT pg_catalog.setval('public.rmm_order_line_item_rmm_order_line_item_id_seq', 1, false);
 
 
 --
@@ -1219,7 +1133,7 @@ SELECT pg_catalog.setval('public.rmm_order_line_item_rmm_product_id_seq', 1, fal
 -- Name: rmm_order_rmm_order_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.rmm_order_rmm_order_id_seq', 4, true);
+SELECT pg_catalog.setval('public.rmm_order_rmm_order_id_seq', 1, false);
 
 
 --
@@ -1240,7 +1154,7 @@ SELECT pg_catalog.setval('public.rmm_order_rmm_vendor_id_seq', 1, false);
 -- Name: rmm_product_rmm_product_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.rmm_product_rmm_product_id_seq', 5, true);
+SELECT pg_catalog.setval('public.rmm_product_rmm_product_id_seq', 1, false);
 
 
 --
@@ -1251,10 +1165,10 @@ SELECT pg_catalog.setval('public.rmm_product_rmm_supply_categories_id_seq', 1, f
 
 
 --
--- Name: rmm_receipt_line_item_rmm_order_line_item_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: rmm_receipt_line_item_rmm_product_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.rmm_receipt_line_item_rmm_order_line_item_id_seq', 1, false);
+SELECT pg_catalog.setval('public.rmm_receipt_line_item_rmm_product_id_seq', 1, false);
 
 
 --
@@ -1286,17 +1200,10 @@ SELECT pg_catalog.setval('public.rmm_receipt_rmm_receipt_id_seq', 1, false);
 
 
 --
--- Name: rmm_shop_inventory_product_rmm_product_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: rmm_shop_inventory_rmm_product_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.rmm_shop_inventory_product_rmm_product_id_seq', 1, false);
-
-
---
--- Name: rmm_shop_inventory_product_rmm_shop_inventory_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.rmm_shop_inventory_product_rmm_shop_inventory_id_seq', 1, false);
+SELECT pg_catalog.setval('public.rmm_shop_inventory_rmm_product_id_seq', 1, false);
 
 
 --
@@ -1317,7 +1224,7 @@ SELECT pg_catalog.setval('public.rmm_shop_inventory_rmm_shop_inventory_id_seq', 
 -- Name: rmm_supply_categories_rmm_supply_categories_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.rmm_supply_categories_rmm_supply_categories_id_seq', 1, true);
+SELECT pg_catalog.setval('public.rmm_supply_categories_rmm_supply_categories_id_seq', 1, false);
 
 
 --
@@ -1393,14 +1300,6 @@ ALTER TABLE ONLY public.rmm_shop_inventory
 
 
 --
--- Name: rmm_shop_inventory_product rmm_shop_inventory_product_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.rmm_shop_inventory_product
-    ADD CONSTRAINT rmm_shop_inventory_product_pkey PRIMARY KEY (rmm_product_id, rmm_shop_inventory_id);
-
-
---
 -- Name: rmm_supply_categories rmm_supply_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1414,14 +1313,6 @@ ALTER TABLE ONLY public.rmm_supply_categories
 
 ALTER TABLE ONLY public.rmm_invoice_line_item
     ADD CONSTRAINT rmm_invoice_line_item_rmm_invoice_id_fkey FOREIGN KEY (rmm_invoice_id) REFERENCES public.rmm_invoice(rmm_invoice_id);
-
-
---
--- Name: rmm_invoice_line_item rmm_invoice_line_item_rmm_order_line_item_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.rmm_invoice_line_item
-    ADD CONSTRAINT rmm_invoice_line_item_rmm_order_line_item_id_fkey FOREIGN KEY (rmm_order_line_item_id) REFERENCES public.rmm_order_line_item(rmm_order_line_item_id);
 
 
 --
@@ -1465,11 +1356,11 @@ ALTER TABLE ONLY public.rmm_product
 
 
 --
--- Name: rmm_receipt_line_item rmm_receipt_line_item_rmm_order_line_item_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: rmm_receipt_line_item rmm_receipt_line_item_rmm_product_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.rmm_receipt_line_item
-    ADD CONSTRAINT rmm_receipt_line_item_rmm_order_line_item_id_fkey FOREIGN KEY (rmm_order_line_item_id) REFERENCES public.rmm_order_line_item(rmm_order_line_item_id);
+    ADD CONSTRAINT rmm_receipt_line_item_rmm_product_id_fkey FOREIGN KEY (rmm_product_id) REFERENCES public.rmm_product(rmm_product_id);
 
 
 --
@@ -1489,19 +1380,11 @@ ALTER TABLE ONLY public.rmm_receipt
 
 
 --
--- Name: rmm_shop_inventory_product rmm_shop_inventory_product_rmm_product_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: rmm_shop_inventory rmm_shop_inventory_rmm_product_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.rmm_shop_inventory_product
-    ADD CONSTRAINT rmm_shop_inventory_product_rmm_product_id_fkey FOREIGN KEY (rmm_product_id) REFERENCES public.rmm_product(rmm_product_id);
-
-
---
--- Name: rmm_shop_inventory_product rmm_shop_inventory_product_rmm_shop_inventory_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.rmm_shop_inventory_product
-    ADD CONSTRAINT rmm_shop_inventory_product_rmm_shop_inventory_id_fkey FOREIGN KEY (rmm_shop_inventory_id) REFERENCES public.rmm_shop_inventory(rmm_shop_inventory_id);
+ALTER TABLE ONLY public.rmm_shop_inventory
+    ADD CONSTRAINT rmm_shop_inventory_rmm_product_id_fkey FOREIGN KEY (rmm_product_id) REFERENCES public.rmm_product(rmm_product_id);
 
 
 --

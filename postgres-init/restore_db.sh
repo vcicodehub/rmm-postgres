@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "Creating rmm database..."
+echo "Creating rmm databases..."
 su postgres -c 'createdb rmm_orders'
 su postgres -c 'createdb rmm_users'
 su postgres -c 'createdb rmm_shops'

@@ -24,7 +24,6 @@ Create data dump
 > su postgres
 > cd ~
 > pg_dump rmm > rmm.db.dat
-> cp rmm.db.dat /var/lib/postgresql
 Database dump is now in your local volume
 ```
 ```
