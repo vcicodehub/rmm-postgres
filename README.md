@@ -4,7 +4,7 @@
 ```
 > docker-compose up -d
 verify the db is running...
-> docker exec rmm-postgres_buckeyes_1 /var/lib/postgresql/restore_db.sh
+> docker exec rmm-postgres-main_buckeyes_1 /var/lib/postgresql/restore_db.sh
 ```
 
 ## Start Database
