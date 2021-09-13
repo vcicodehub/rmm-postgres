@@ -37,3 +37,13 @@ Copy tables from on db to another db
 > su postgres
 > pg_dump -a -t rmm_order rmm | psql rmm_orders
 ```
+
+## Database logging
+[https://www.postgresql.org/docs/current/config-setting.html](https://www.postgresql.org/docs/current/config-setting.html)
+
+Postgres config found in data directory.
+
+Use this to show SQL statements in the log
+```
+log_connections = yes
+```
