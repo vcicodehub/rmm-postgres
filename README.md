@@ -1,17 +1,9 @@
 # Docker Readme File
 
-## Initialize Database
-```
-> docker-compose up -d
-verify the db is running...
-> docker exec rmm /var/lib/postgresql/restore_db.sh
-```
-
-## Start Database
+## Initialize/Start Database
 ```
 > docker-compose up -d
 ```
-
 ## Stop Database
 ```
 > docker-compose down
