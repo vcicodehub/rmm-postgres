@@ -1,0 +1,1 @@
+CONNECT rmm_vendors;
