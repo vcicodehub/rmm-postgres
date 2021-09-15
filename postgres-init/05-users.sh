@@ -1,0 +1,1 @@
+psql rmm_users -f /var/lib/postgresql/rmm_users.db.sql

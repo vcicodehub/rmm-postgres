@@ -1,0 +1,1 @@
+psql rmm_vendors -f /var/lib/postgresql/rmm_vendors.db.sql

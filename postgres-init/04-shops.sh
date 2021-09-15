@@ -1,0 +1,1 @@
+psql rmm_shops -f /var/lib/postgresql/rmm_shops.db.sql

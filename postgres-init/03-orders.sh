@@ -1,0 +1,1 @@
+psql rmm_orders -f /var/lib/postgresql/rmm_orders.db.sql
