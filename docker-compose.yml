@@ -2,15 +2,15 @@ version: '3.8'
 
 services:
   buckeyes:
-    container_name: rmm
+    container_name: rmm-db
     environment:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_USER=postgres
     image: postgres
-    hostname: rmm
+    hostname: rmm-db
     ports:
       - 5432:5432
     volumes: 
-      - ./postgres-init:/var/lib/postgresql
       - ./postgres-data:/var/lib/postgresql/data
+      - ./postgres-init:/docker-entrypoint-initdb.d
       
