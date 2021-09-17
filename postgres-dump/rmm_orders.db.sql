@@ -283,6 +283,47 @@ ALTER SEQUENCE public.rmm_invoice_rmm_order_id_seq OWNED BY public.rmm_invoice.r
 
 
 --
+-- Name: rmm_metal_rates; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.rmm_metal_rates (
+    rmm_metal_rate_id integer NOT NULL,
+    mr_metal_type character varying(500),
+    mr_metal_name character varying(500),
+    mr_rate numeric,
+    mr_status character varying(100),
+    mr_add_user_id character varying(500),
+    mr_add_date date,
+    mr_mtc_user_id character varying(500),
+    mr_mtc_date date
+);
+
+
+ALTER TABLE public.rmm_metal_rates OWNER TO postgres;
+
+--
+-- Name: rmm_metal_rates_rmm_metal_rate_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.rmm_metal_rates_rmm_metal_rate_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.rmm_metal_rates_rmm_metal_rate_id_seq OWNER TO postgres;
+
+--
+-- Name: rmm_metal_rates_rmm_metal_rate_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.rmm_metal_rates_rmm_metal_rate_id_seq OWNED BY public.rmm_metal_rates.rmm_metal_rate_id;
+
+
+--
 -- Name: rmm_order; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -861,6 +902,13 @@ ALTER TABLE ONLY public.rmm_invoice_line_item ALTER COLUMN rmm_product_id SET DE
 
 
 --
+-- Name: rmm_metal_rates rmm_metal_rate_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.rmm_metal_rates ALTER COLUMN rmm_metal_rate_id SET DEFAULT nextval('public.rmm_metal_rates_rmm_metal_rate_id_seq'::regclass);
+
+
+--
 -- Name: rmm_order rmm_order_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1004,10 +1052,30 @@ COPY public.rmm_invoice_line_item (rmm_invoice_line_item_id, rmm_invoice_id, rmm
 
 
 --
+-- Data for Name: rmm_metal_rates; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.rmm_metal_rates (rmm_metal_rate_id, mr_metal_type, mr_metal_name, mr_rate, mr_status, mr_add_user_id, mr_add_date, mr_mtc_user_id, mr_mtc_date) FROM stdin;
+1	GOLD_18K	Gold 18K	1.38	ACTIVE	SYSTEM	2021-09-17	SYSTEM	2021-09-17
+2	GOLD_14K	Gold 14K	1.38	ACTIVE	SYSTEM	2021-09-17	SYSTEM	2021-09-17
+3	GOLD_10K	Gold 10K	1.38	ACTIVE	SYSTEM	2021-09-17	SYSTEM	2021-09-17
+4	SILVER_18K	Silver 18K	1.38	ACTIVE	SYSTEM	2021-09-17	SYSTEM	2021-09-17
+5	SILVER_14K	Silver 18K	1.38	ACTIVE	SYSTEM	2021-09-17	SYSTEM	2021-09-17
+6	SILVER_10K	Silver 18K	1.38	ACTIVE	SYSTEM	2021-09-17	SYSTEM	2021-09-17
+7	PLATINUM_18K	Platinum 18K	1.38	ACTIVE	SYSTEM	2021-09-17	SYSTEM	2021-09-17
+8	PLATINUM_14K	Platinum 14K	1.38	ACTIVE	SYSTEM	2021-09-17	SYSTEM	2021-09-17
+9	PLATINUM_18K	Platinum 10K	1.38	ACTIVE	SYSTEM	2021-09-17	SYSTEM	2021-09-17
+\.
+
+
+--
 -- Data for Name: rmm_order; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.rmm_order (rmm_order_id, rmm_user_id, rmm_shop_id, rmm_vendor_id, o_number, o_type, o_date, o_status, o_store_comment, o_is_received, o_is_delivered, o_repair_job_num, o_approved_by, o_approved_by_date, o_add_user_id, o_add_date, o_mtc_user_id, o_mtc_date) FROM stdin;
+2	foo	55	1	2200	VENDOR	2021-08-29	ACTIVE	Need these ASAP!	N	N	797	Megan	2021-08-29	\N	2021-09-11	\N	2021-09-11
+3	foo	44	1	3300	VENDOR	2021-08-29	ACTIVE	Need these ASAP!	N	N	797	Megan	2021-08-29	\N	2021-09-11	\N	2021-09-11
+1	foo	77	1	1100	VENDOR	2021-08-29	ACTIVE	Did this update?	N	N	777	Megan	2021-08-29	\N	2021-09-11	\N	2021-09-14
 \.
 
 
@@ -1016,6 +1084,10 @@ COPY public.rmm_order (rmm_order_id, rmm_user_id, rmm_shop_id, rmm_vendor_id, o_
 --
 
 COPY public.rmm_order_line_item (rmm_order_line_item_id, rmm_order_id, rmm_product_id, oli_product_key, oli_description, oli_uom, oli_line_num, oli_quantity_ordered, oli_quantity_delivered, oli_quantity_invoiced, oli_add_user_id, oli_add_date, oli_mtc_user_id, oli_mtc_date) FROM stdin;
+1	2	2	PRD-KEY	Silver Chain	\N	1	16	0	0	\N	2021-09-11	\N	2021-09-11
+2	3	4	PRD-KEY	Gold Chain	\N	1	16	0	0	\N	2021-09-11	\N	2021-09-11
+3	3	5	PRD-KEY	Pendant	\N	2	12	0	0	\N	2021-09-11	\N	2021-09-11
+4	3	6	PRD-KEY	Diamond	\N	3	2	0	0	\N	2021-09-11	\N	2021-09-11
 \.
 
 
@@ -1024,6 +1096,10 @@ COPY public.rmm_order_line_item (rmm_order_line_item_id, rmm_order_id, rmm_produ
 --
 
 COPY public.rmm_product (rmm_product_id, rmm_supply_categories_id, p_key, p_type, p_description, p_cost, p_status, p_name, p_quality, p_cut, p_size, p_shape, p_size_carat, p_color, p_ster_quality, p_add_user_id, p_add_date, p_mtc_user_id, p_mtc_date) FROM stdin;
+2	2	KEY-0004	SILVER	Silver jewelry	399.99	ACTIVE	Silver Chain	4					silver	5	\N	2021-09-11	\N	2021-09-11
+4	2	KEY-0004	GOLD	Gold jewelry	599.99	ACTIVE	Gold Chain	4					silver	5	\N	2021-09-11	\N	2021-09-11
+5	3	KEY-0004	SILVER	Silver jewelry	299.99	ACTIVE	Pendant	4		small			silver	3	\N	2021-09-11	\N	2021-09-11
+6	4	KEY-00664	GEMSTONE	Diamond	3299.99	ACTIVE	Forever Diamond	4		small			yellow	6	\N	2021-09-11	\N	2021-09-11
 \.
 
 
@@ -1056,6 +1132,9 @@ COPY public.rmm_shop_inventory (rmm_shop_inventory_id, rmm_shop_id, rmm_product_
 --
 
 COPY public.rmm_supply_categories (rmm_supply_categories_id, sc_category, sc_description, sc_bulk_item, sc_cost, sc_add_user_id, sc_add_date, sc_mtc_user_id, sc_mtc_date) FROM stdin;
+2	GOLD	Gold	Y	250.00	\N	2021-09-11	\N	2021-09-11
+3	SILVER	Silver	Y	299.00	\N	2021-09-11	\N	2021-09-11
+4	DIAMOND	Diamond	Y	2499.99	\N	2021-09-11	\N	2021-09-11
 \.
 
 
@@ -1109,6 +1188,13 @@ SELECT pg_catalog.setval('public.rmm_invoice_rmm_order_id_seq', 1, false);
 
 
 --
+-- Name: rmm_metal_rates_rmm_metal_rate_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.rmm_metal_rates_rmm_metal_rate_id_seq', 9, true);
+
+
+--
 -- Name: rmm_order_line_item_rmm_order_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -1119,7 +1205,7 @@ SELECT pg_catalog.setval('public.rmm_order_line_item_rmm_order_id_seq', 1, false
 -- Name: rmm_order_line_item_rmm_order_line_item_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.rmm_order_line_item_rmm_order_line_item_id_seq', 1, false);
+SELECT pg_catalog.setval('public.rmm_order_line_item_rmm_order_line_item_id_seq', 4, true);
 
 
 --
@@ -1133,7 +1219,7 @@ SELECT pg_catalog.setval('public.rmm_order_line_item_rmm_product_id_seq', 1, fal
 -- Name: rmm_order_rmm_order_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.rmm_order_rmm_order_id_seq', 1, false);
+SELECT pg_catalog.setval('public.rmm_order_rmm_order_id_seq', 3, true);
 
 
 --
@@ -1154,7 +1240,7 @@ SELECT pg_catalog.setval('public.rmm_order_rmm_vendor_id_seq', 1, false);
 -- Name: rmm_product_rmm_product_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.rmm_product_rmm_product_id_seq', 1, false);
+SELECT pg_catalog.setval('public.rmm_product_rmm_product_id_seq', 6, true);
 
 
 --
@@ -1224,7 +1310,7 @@ SELECT pg_catalog.setval('public.rmm_shop_inventory_rmm_shop_inventory_id_seq', 
 -- Name: rmm_supply_categories_rmm_supply_categories_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.rmm_supply_categories_rmm_supply_categories_id_seq', 1, false);
+SELECT pg_catalog.setval('public.rmm_supply_categories_rmm_supply_categories_id_seq', 4, true);
 
 
 --

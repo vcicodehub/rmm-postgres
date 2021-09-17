@@ -35,7 +35,8 @@ CREATE TABLE public.rmm_events (
     e_add_user_id character varying(500),
     e_add_date date,
     e_mtc_user_id character varying(500),
-    e_mtc_date date
+    e_mtc_date date,
+    e_label character varying(500)
 );
 
 
@@ -74,7 +75,29 @@ ALTER TABLE ONLY public.rmm_events ALTER COLUMN rmm_event_id SET DEFAULT nextval
 -- Data for Name: rmm_events; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.rmm_events (rmm_event_id, rmm_user_id, e_date, e_type, e_type_id, e_title, e_description, e_add_user_id, e_add_date, e_mtc_user_id, e_mtc_date) FROM stdin;
+COPY public.rmm_events (rmm_event_id, rmm_user_id, e_date, e_type, e_type_id, e_title, e_description, e_add_user_id, e_add_date, e_mtc_user_id, e_mtc_date, e_label) FROM stdin;
+1	admin	2021-08-23	CREATE_ORDER	1000	Create Order	A new order was created, processed.	\N	2021-09-13	SYSTEM	2021-09-13	Purchase Order - R234897
+16	foo	2021-09-13	VIEW_ORDER	2106	View Order	Order was retrieved by user.	\N	2021-09-13	\N	2021-09-13	Purchase Order - R234897
+17	foo	2021-09-13	VIEW_ORDER	2107	View Order	Order was retrieved by user.	\N	2021-09-13	\N	2021-09-13	Purchase Order - R234897
+18	foo	2021-09-13	VIEW_ORDER	2202	View Order	Order was retrieved by user.	\N	2021-09-13	\N	2021-09-13	Purchase Order - R234897
+19	foo	2021-09-13	VIEW_ORDER	2222	View Order	Order was retrieved by user.	\N	2021-09-13	\N	2021-09-13	Purchase Order - R234897
+2	foo	2021-08-23	VIEW_ORDER	1000	View Order	Order was retrieved by user.	\N	2021-07-13	\N	2021-09-13	Purchase Order - R234897
+3	foo	2021-08-23	VIEW_ORDER	1001	View Order	Order was retrieved by user.	\N	2021-07-13	\N	2021-09-13	Purchase Order - R234897
+4	foo	2021-08-23	VIEW_ORDER	1005	View Order	Order was retrieved by user.	\N	2021-09-13	\N	2021-09-13	Purchase Order - R234897
+5	foo	2021-08-15	VIEW_ORDER	1105	View Order	Order was retrieved by user.	\N	2021-09-13	\N	2021-09-13	Purchase Order - R234897
+6	foo	2021-08-15	VIEW_ORDER	1777	View Order	Order was retrieved by user.	\N	2021-09-13	\N	2021-09-13	Purchase Order - R234897
+7	foo	2021-08-15	VIEW_ORDER	2000	View Order	Order was retrieved by user.	\N	2021-09-13	\N	2021-09-13	Purchase Order - R234897
+8	foo	2021-07-05	VIEW_ORDER	2010	View Order	Order was retrieved by user.	\N	2021-09-13	\N	2021-09-13	Purchase Order - R234897
+9	foo	2021-07-05	VIEW_ORDER	2022	View Order	Order was retrieved by user.	\N	2021-09-13	\N	2021-09-13	Purchase Order - R234897
+10	foo	2021-07-05	VIEW_ORDER	2055	View Order	Order was retrieved by user.	\N	2021-09-13	\N	2021-09-13	Purchase Order - R234897
+11	foo	2021-07-25	VIEW_ORDER	2056	View Order	Order was retrieved by user.	\N	2021-09-13	\N	2021-09-13	Purchase Order - R234897
+12	foo	2021-07-25	VIEW_ORDER	2057	View Order	Order was retrieved by user.	\N	2021-09-13	\N	2021-09-13	Purchase Order - R234897
+13	foo	2021-07-25	VIEW_ORDER	2066	View Order	Order was retrieved by user.	\N	2021-09-13	\N	2021-09-13	Purchase Order - R234897
+14	foo	2021-07-25	VIEW_ORDER	2076	View Order	Order was retrieved by user.	\N	2021-09-13	\N	2021-09-13	Purchase Order - R234897
+15	foo	2021-07-25	VIEW_ORDER	2086	View Order	Order was retrieved by user.	\N	2021-09-13	\N	2021-09-13	Purchase Order - R234897
+20	karl	2021-09-13	VIEW_ORDER	2232	View Order	Order was retrieved by user.	\N	2021-09-13	\N	2021-09-13	Purchase Order - R234897
+21	karl	2021-09-13	VIEW_ORDER	2247	View Order	Order was retrieved by user.	\N	2021-09-13	\N	2021-09-13	Transfer Order - T748346
+22	karl	2021-09-13	VIEW_ORDER	2247	View Order	Order was retrieved by user.	\N	2021-09-13	\N	2021-09-13	Purchase Order - R594767
 \.
 
 
@@ -82,7 +105,7 @@ COPY public.rmm_events (rmm_event_id, rmm_user_id, e_date, e_type, e_type_id, e_
 -- Name: rmm_events_rmm_event_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.rmm_events_rmm_event_id_seq', 1, false);
+SELECT pg_catalog.setval('public.rmm_events_rmm_event_id_seq', 22, true);
 
 
 --
