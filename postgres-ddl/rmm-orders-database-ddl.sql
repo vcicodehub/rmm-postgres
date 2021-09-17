@@ -156,8 +156,10 @@ create table "rmm_order_line_item" (
 create table "rmm_receipt_line_item" (
   "rmm_receipt_line_item_id" SERIAL PRIMARY KEY,
   "rmm_receipt_id" SERIAL REFERENCES rmm_receipt("rmm_receipt_id"),
-  "rmm_product_id" SERIAL REFERENCES rmm_product("rmm_product_id"),
+  "rli_date" date,
+  "rli_status" varchar(100),
   "rli_quantity" decimal,
+  "rli_uom" varchar(100),
   "rli_add_user_id" varchar(500),
   "rli_add_date" date,
   "rli_mtc_user_id" varchar(500),
@@ -167,11 +169,13 @@ create table "rmm_receipt_line_item" (
 create table "rmm_invoice_line_item" (
   "rmm_invoice_line_item_id" SERIAL PRIMARY KEY,
   "rmm_invoice_id" SERIAL REFERENCES rmm_invoice("rmm_invoice_id"),
+  "rmm_order_line_item_id" SERIAL REFERENCES rmm_order_line_item("rmm_order_line_item_id"),
   "rmm_product_id" SERIAL REFERENCES rmm_product("rmm_product_id"),
   "ili_description" varchar(2000),
   "ili_line_num" decimal,
   "ili_cost" decimal,
   "ili_quantity" decimal,
+  "ili_tax_amount" decimal,
   "ili_total_amount" decimal,
   "ili_add_user_id" varchar(500),
   "ili_add_date" date,
@@ -182,11 +186,34 @@ create table "rmm_invoice_line_item" (
 create table "rmm_shop_inventory" (
   "rmm_shop_inventory_id" SERIAL PRIMARY KEY,
   "rmm_shop_id" SERIAL,
-  "rmm_product_id" SERIAL REFERENCES rmm_product("rmm_product_id"),
-  "si_quantity" decimal,
   "si_status" varchar(100),
   "si_add_user_id" varchar(500),
   "si_add_date" date,
   "si_mtc_user_id" varchar(500),
   "si_mtc_date" date
 );
+
+create table "rmm_shop_inventory_product" (
+  "rmm_product_id" SERIAL REFERENCES rmm_product("rmm_product_id"),
+  "rmm_shop_inventory_id" SERIAL REFERENCES rmm_shop_inventory("rmm_shop_inventory_id"),
+  "sip_count" decimal,
+  "sip_status" varchar(100),
+  "sip_add_user_id" varchar(500),
+  "sip_add_date" date,
+  "sip_mtc_user_id" varchar(500),
+  "sip_mtc_date" date,
+  PRIMARY KEY(rmm_product_id, rmm_shop_inventory_id)
+);
+
+create table "rmm_metal_rates" (
+  "rmm_metal_rate_id" SERIAL,
+  "mr_metal_type" varchar(500),
+  "mr_metal_name" varchar(500),
+  "mr_rate" decimal,
+  "mr_status" varchar(100),
+  "mr_add_user_id" varchar(500),
+  "mr_add_date" date,
+  "mr_mtc_user_id" varchar(500),
+  "mr_mtc_date" date
+);
+
