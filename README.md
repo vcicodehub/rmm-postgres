@@ -9,6 +9,11 @@
 > docker-compose down
 ```
 
+## Run Update Scripts
+```
+> docker exec -it rmm-db bash ./var/lib/postgresql/rmm-update.sh
+```
+
 ## Database Dump/Restore
 These commands are here for reference only...
 ```
