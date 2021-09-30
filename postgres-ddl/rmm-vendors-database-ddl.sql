@@ -17,6 +17,7 @@ create table "rmm_vendor" (
   "v_payterm_net_days" decimal,
   "v_requires_srsp" char(1),
   "v_requires_kimberly" char(1),
+  "v_send_flip_file" char(1),
   "v_add_user_id" varchar(500),
   "v_add_date" date,
   "v_mtc_user_id" varchar(500),
