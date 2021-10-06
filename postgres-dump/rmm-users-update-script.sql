@@ -57,4 +57,26 @@ insert into rmm_role_permission (rmm_role_id, rmm_permission_id, rp_status, rp_a
   (2, 1, 'ACTIVE', 'SYSTEM', current_date, 'SYSTEM', current_date),
   (2, 2, 'ACTIVE', 'SYSTEM', current_date, 'SYSTEM', current_date),
   (3, 4, 'ACTIVE', 'SYSTEM', current_date, 'SYSTEM', current_date);
-  
+
+create table "rmm_search_profile" (
+  "rmm_search_profile_id" serial primary key,
+  "rmm_user_id" varchar(500) references rmm_user("rmm_user_id"),
+  "sp_status" varchar(100),
+  "sp_name" varchar(500),
+  "sp_type" varchar(100),
+  "sp_add_user_id" varchar(500),
+  "sp_add_date" date,
+  "sp_mtc_user_id" varchar(500),
+  "sp_mtc_date" date
+);
+
+create table "rmm_search_profile_criteria" (
+  "rmm_search_criteria_id" serial primary key,
+  "rmm_search_profile_id" integer references rmm_search_profile("rmm_search_profile_id"),
+  "spc_name" varchar(500),
+  "spc_value" varchar(100),
+  "spc_add_user_id" varchar(500),
+  "spc_add_date" date,
+  "spc_mtc_user_id" varchar(500),
+  "spc_mtc_date" date
+);
