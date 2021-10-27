@@ -12,6 +12,7 @@ create table "rmm_user" (
 create table "rmm_role" (
   "rmm_role_id" SERIAL PRIMARY KEY,
   "ro_name" varchar(500),
+  "ro_description" varchar(1000),
   "ro_status" varchar(100),
   "ro_add_user_id" varchar(500),
   "ro_add_date" date,
