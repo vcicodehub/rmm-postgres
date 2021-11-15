@@ -102,6 +102,8 @@ create table "rmm_order" (
   "o_is_received" char(1),
   "o_is_delivered" char(1),
   "o_repair_job_num" varchar(500),
+  "o_error_msg" varchar(4000),
+  "o_error" char(1),
   "o_approved_by" varchar(500),
   "o_approved_by_date" date,
   "o_add_user_id" varchar(500),

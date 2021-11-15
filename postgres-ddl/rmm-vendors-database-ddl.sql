@@ -24,7 +24,7 @@ create table "rmm_vendor" (
   "v_mtc_date" date
 );
 
-create table "rmm_vendor_invoice_error" (
+create table "rmm_vendor_invoice" (
   "rmm_vendor_invoice_error_id" serial,
   "rmm_order_id" integer,
   "rmm_invoice_id" integer,
@@ -55,6 +55,7 @@ create table "rmm_vendor_invoice_error" (
   "vie_uom" varchar(100),
   "vie_vendor_name" varchar(500),
   "vie_vendor_number" integer,
+  "vie_invoice_date" date,
   "vie_add_user_id" varchar(500),
   "vie_add_date" date,
   "vie_mtc_user_id" varchar(500),
@@ -66,7 +67,6 @@ create table "rmm_vendor_order" (
   "vo_vendor_name" varchar(500),
   "vo_vendor_number" integer,
   "vo_status" varchar(100),
-  "vo_product_sku" varchar(500),
   "vo_product_key" varchar(500),
   "vo_po_number" varchar(100),
   "vo_line_number" integer,
