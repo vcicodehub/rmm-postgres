@@ -94,6 +94,7 @@ create table "rmm_order" (
   "rmm_shop_id" SERIAL,
   "rmm_vendor_id" SERIAL,
   "o_vendor_name" varchar(500),
+  "o_shop_number" varchar(100),
   "o_number" varchar(100),
   "o_type" varchar(100),
   "o_date" date,
