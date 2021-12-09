@@ -1,9 +1,10 @@
 create table "rmm_vendor" (
-  "rmm_vendor_id" serial,
+  "rmm_vendor_id" serial not null,
   "v_type" varchar(100),
   "v_status" varchar(100),
   "v_number" varchar(100),
   "v_name" varchar(1000),
+  "v_validation_req" char(1),
   "v_email_addr" varchar(500),
   "v_addr_line1" varchar(500),
   "v_addr_line2" varchar(500),
@@ -11,21 +12,21 @@ create table "rmm_vendor" (
   "v_addr_state" varchar(3),
   "v_addr_zip" varchar(10),
   "v_order_method" varchar(100),
-  "v_cadcam" char(1),
   "v_payterm_discount" decimal,
   "v_payterm_net_date" date,
   "v_payterm_net_days" decimal,
-  "v_requires_srsp" char(1),
-  "v_requires_kimberly" char(1),
-  "v_send_flip_file" char(1),
+  "v_cadcam" char(1) not null,
+  "v_requires_srsp" char(1) not null,
+  "v_requires_kimberly" char(1) not null,
+  "v_send_flip_file" char(1) not null,
   "v_add_user_id" varchar(500),
   "v_add_date" date,
   "v_mtc_user_id" varchar(500),
   "v_mtc_date" date
 );
 
-create table "rmm_vendor_invoice" (
-  "rmm_vendor_invoice_error_id" serial,
+create table "rmm_vendor_invoice_error" (
+  "rmm_vendor_invoice_error_id" serial not null,
   "rmm_order_id" integer,
   "rmm_invoice_id" integer,
   "vie_amount" decimal,
@@ -62,8 +63,8 @@ create table "rmm_vendor_invoice" (
   "vie_mtc_date" date
 );
 
-create table "rmm_vendor_order" (
-  "rmm_vendor_order_id" serial,
+create table "rmm_vendor_order_error" (
+  "rmm_vendor_order_id" serial not null,
   "vo_vendor_name" varchar(500),
   "vo_vendor_number" integer,
   "vo_status" varchar(100),
@@ -94,8 +95,8 @@ create table "rmm_vendor_order" (
 );
 
 create table "rmm_vendor_ftp" (
-  "rmm_vendor_ftp_id" serial,
-  "rmm_vendor_id" decimal,
+  "rmm_vendor_ftp_id" serial not null,
+  "rmm_vendor_id" decimal not null,
   "vftp_vendor_name" varchar(50),
   "vftp_param1" varchar(50),
   "vftp_param2" varchar(50),
@@ -111,7 +112,7 @@ create table "rmm_vendor_ftp" (
 );
 
 create table "rmm_vendor_file" (
-  "rmm_vendor_file_id" serial,
+  "rmm_vendor_file_id" serial not null,
   "vf_checksum" varchar(100),
   "vf_filename" varchar(500),
   "vf_vendor_name" varchar(500),

@@ -1,5 +1,5 @@
 create table "rmm_events" (
-  "rmm_event_id" SERIAL PRIMARY KEY,
+  "rmm_event_id" SERIAL PRIMARY KEY not null,
   "rmm_user_id" varchar(500),
   "e_date" date,
   "e_type" varchar(500),

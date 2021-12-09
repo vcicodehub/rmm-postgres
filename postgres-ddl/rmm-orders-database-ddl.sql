@@ -1,6 +1,6 @@
 create table "rmm_inventory_report" (
-  "rmm_inventory_report_id" SERIAL PRIMARY KEY,
-  "rmm_shop_id" SERIAL,
+  "rmm_inventory_report_id" SERIAL PRIMARY KEY not null,
+  "rmm_shop_id" SERIAL not null,
   "ir_status" varchar(100),
   "ir_diamonds_cost" decimal,
   "ir_asst_dia_bags_cost" decimal,
@@ -55,7 +55,7 @@ create table "rmm_inventory_report" (
 );
 
 create table "rmm_supply_categories" (
-  "rmm_supply_categories_id" SERIAL PRIMARY KEY,
+  "rmm_supply_categories_id" SERIAL PRIMARY KEY not null,
   "sc_category" varchar(200),
   "sc_description" varchar(500),
   "sc_bulk_item" char(1),
@@ -67,7 +67,7 @@ create table "rmm_supply_categories" (
 );
 
 create table "rmm_product" (
-  "rmm_product_id" SERIAL PRIMARY KEY,
+  "rmm_product_id" SERIAL PRIMARY KEY not null,
   "rmm_supply_categories_id" SERIAL REFERENCES rmm_supply_categories("rmm_supply_categories_id"),
   "p_key" varchar(1000),
   "p_type" varchar(100),
@@ -90,7 +90,7 @@ create table "rmm_product" (
 );
 
 create table "rmm_order" (
-  "rmm_order_id" SERIAL PRIMARY KEY,
+  "rmm_order_id" SERIAL PRIMARY KEY not null,
   "rmm_user_id" varchar(500),
   "rmm_shop_id" SERIAL,
   "rmm_vendor_id" SERIAL,
@@ -116,7 +116,7 @@ create table "rmm_order" (
 );
 
 create table "rmm_receipt" (
-  "rmm_receipt_id" SERIAL PRIMARY KEY,
+  "rmm_receipt_id" SERIAL PRIMARY KEY not null,
   "rmm_order_id" SERIAL REFERENCES rmm_order("rmm_order_id"),
   "r_date" date,
   "r_status" varchar(100),
@@ -127,7 +127,7 @@ create table "rmm_receipt" (
 );
 
 create table "rmm_invoice" (
-  "rmm_invoice_id" SERIAL PRIMARY KEY,
+  "rmm_invoice_id" SERIAL PRIMARY KEY not null,
   "rmm_order_id" SERIAL REFERENCES rmm_order("rmm_order_id"),
   "i_number" varchar(200),
   "i_status" varchar(200),
@@ -143,7 +143,7 @@ create table "rmm_invoice" (
 );
 
 create table "rmm_order_line_item" (
-  "rmm_order_line_item_id" SERIAL PRIMARY KEY,
+  "rmm_order_line_item_id" SERIAL PRIMARY KEY not null,
   "rmm_order_id" SERIAL REFERENCES rmm_order("rmm_order_id"),
   "rmm_product_id" SERIAL REFERENCES rmm_product("rmm_product_id"),
   "oli_product_key" varchar(1000),
@@ -161,7 +161,7 @@ create table "rmm_order_line_item" (
 );
 
 create table "rmm_receipt_line_item" (
-  "rmm_receipt_line_item_id" SERIAL PRIMARY KEY,
+  "rmm_receipt_line_item_id" SERIAL PRIMARY KEY not null,
   "rmm_receipt_id" SERIAL REFERENCES rmm_receipt("rmm_receipt_id"),
   "rli_date" date,
   "rli_status" varchar(100),
@@ -174,7 +174,7 @@ create table "rmm_receipt_line_item" (
 );
 
 create table "rmm_invoice_line_item" (
-  "rmm_invoice_line_item_id" SERIAL PRIMARY KEY,
+  "rmm_invoice_line_item_id" SERIAL PRIMARY KEY not null,
   "rmm_invoice_id" SERIAL REFERENCES rmm_invoice("rmm_invoice_id"),
   "rmm_order_line_item_id" SERIAL REFERENCES rmm_order_line_item("rmm_order_line_item_id"),
   "rmm_product_id" SERIAL REFERENCES rmm_product("rmm_product_id"),
@@ -191,7 +191,7 @@ create table "rmm_invoice_line_item" (
 );
 
 create table "rmm_shop_inventory" (
-  "rmm_shop_inventory_id" SERIAL PRIMARY KEY,
+  "rmm_shop_inventory_id" SERIAL PRIMARY KEY not null,
   "rmm_shop_id" SERIAL,
   "si_status" varchar(100),
   "si_add_user_id" varchar(500),
@@ -201,7 +201,7 @@ create table "rmm_shop_inventory" (
 );
 
 create table "rmm_shop_inventory_product" (
-  "rmm_product_id" SERIAL REFERENCES rmm_product("rmm_product_id"),
+  "rmm_product_id" SERIAL REFERENCES rmm_product("rmm_product_id") not null,
   "rmm_shop_inventory_id" SERIAL REFERENCES rmm_shop_inventory("rmm_shop_inventory_id"),
   "sip_count" decimal,
   "sip_status" varchar(100),
@@ -213,7 +213,7 @@ create table "rmm_shop_inventory_product" (
 );
 
 create table "rmm_metal_rates" (
-  "rmm_metal_rate_id" SERIAL,
+  "rmm_metal_rate_id" SERIAL not null,
   "mr_metal_type" varchar(500),
   "mr_metal_name" varchar(500),
   "mr_rate" decimal,

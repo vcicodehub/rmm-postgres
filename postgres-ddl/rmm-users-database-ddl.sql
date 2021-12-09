@@ -1,5 +1,5 @@
 create table "rmm_user" (
-  "rmm_user_id" varchar(500) PRIMARY KEY,
+  "rmm_user_id" varchar(500) PRIMARY KEY not null,
   "u_name" varchar(500),
   "u_password" varchar(200),
   "u_status" varchar(100),
@@ -10,7 +10,7 @@ create table "rmm_user" (
 );
 
 create table "rmm_role" (
-  "rmm_role_id" SERIAL PRIMARY KEY,
+  "rmm_role_id" SERIAL PRIMARY KEY not null,
   "ro_name" varchar(500),
   "ro_description" varchar(1000),
   "ro_status" varchar(100),

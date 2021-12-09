@@ -1,5 +1,5 @@
 create table "rmm_shop" (
-  "rmm_shop_id" SERIAL PRIMARY KEY,
+  "rmm_shop_id" SERIAL PRIMARY KEY not null,
   "s_number" varchar(100),
   "s_store_number" varchar(100),
   "s_name" varchar(1000),
