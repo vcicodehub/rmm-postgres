@@ -224,3 +224,13 @@ create table "rmm_metal_rates" (
   "mr_mtc_date" date
 );
 
+create table "rmm_types" (
+  "rmm_type_id" SERIAL PRIMARY KEY not null,
+  "pt_type_code" varchar(200),
+  "pt_type_id" varchar(200),
+  "pt_type_name" varchar(500),
+  "pt_add_user_id" varchar(500),
+  "pt_add_date" date,
+  "pt_mtc_user_id" varchar(500),
+  "pt_mtc_date" date
+);
