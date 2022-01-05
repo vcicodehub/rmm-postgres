@@ -30,6 +30,7 @@ create table "rmm_vendor_invoice_error" (
   "rmm_vendor_invoice_error_id" serial not null,
   "rmm_order_id" integer,
   "rmm_invoice_id" integer,
+  "rmm_shop_id" integer,
   "vie_amount" decimal,
   "vie_color" varchar(100),
   "vie_cut" varchar(100),
