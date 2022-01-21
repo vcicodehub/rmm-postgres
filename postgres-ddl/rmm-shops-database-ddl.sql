@@ -1,7 +1,7 @@
 create table "rmm_shop" (
   "rmm_shop_id" SERIAL PRIMARY KEY not null,
   "s_number" varchar(100),
-  "s_store_number" varchar(100),
+  "s_store_number" integer,
   "s_name" varchar(1000),
   "s_addr_line1" varchar(500),
   "s_addr_line2" varchar(500),

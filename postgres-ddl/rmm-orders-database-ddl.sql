@@ -192,7 +192,12 @@ create table "rmm_invoice_line_item" (
 
 create table "rmm_shop_inventory" (
   "rmm_shop_inventory_id" SERIAL PRIMARY KEY not null,
-  "rmm_shop_id" SERIAL,
+  "rmm_shop_id" number,
+  "si_reviewer1" varchar(500),
+  "si_reviewer2" varchar(500),
+  "si_month" varchar(100),
+  "si_year" varchar(100),
+  "si_completed_date" date,
   "si_status" varchar(100),
   "si_add_user_id" varchar(500),
   "si_add_date" date,
@@ -214,6 +219,7 @@ create table "rmm_shop_inventory_product" (
 
 create table "rmm_metal_rates" (
   "rmm_metal_rate_id" SERIAL not null,
+  "mr_category" varchar(200),
   "mr_metal_type" varchar(500),
   "mr_metal_name" varchar(500),
   "mr_rate" decimal,
@@ -226,8 +232,8 @@ create table "rmm_metal_rates" (
 
 create table "rmm_types" (
   "rmm_type_id" SERIAL PRIMARY KEY not null,
+  "pt_type_category" varchar(200),
   "pt_type_code" varchar(200),
-  "pt_type_id" varchar(200),
   "pt_type_name" varchar(500),
   "pt_add_user_id" varchar(500),
   "pt_add_date" date,
