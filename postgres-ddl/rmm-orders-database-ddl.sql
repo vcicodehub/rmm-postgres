@@ -209,6 +209,7 @@ create table "rmm_shop_inventory_product" (
   "rmm_product_id" SERIAL REFERENCES rmm_product("rmm_product_id") not null,
   "rmm_shop_inventory_id" SERIAL REFERENCES rmm_shop_inventory("rmm_shop_inventory_id"),
   "sip_count" decimal,
+  "sip_weight" decimal,
   "sip_status" varchar(100),
   "sip_add_user_id" varchar(500),
   "sip_add_date" date,
