@@ -94,6 +94,7 @@ create table "rmm_vendor_order_error" (
   "vo_line_number" integer,
   "vo_shop_number" varchar(200),
   "vo_po_date" date,
+  "vo_cost" decimal,
   "vo_description" varchar(2000),
   "vo_description2" varchar(2000),
   "vo_uom" varchar(100),

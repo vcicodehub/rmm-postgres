@@ -56,10 +56,10 @@ create table "rmm_inventory_report" (
 
 create table "rmm_supply_categories" (
   "rmm_supply_categories_id" SERIAL PRIMARY KEY not null,
+  "sc_type" varchar(200),
   "sc_category" varchar(200),
-  "sc_description" varchar(500),
+  "sc_description" varchar(1000),
   "sc_bulk_item" char(1),
-  "sc_cost" decimal,
   "sc_add_user_id" varchar(500),
   "sc_add_date" date,
   "sc_mtc_user_id" varchar(500),
@@ -154,6 +154,7 @@ create table "rmm_order_line_item" (
   "oli_quantity_ordered" decimal,
   "oli_quantity_delivered" decimal,
   "oli_quantity_invoiced" decimal,
+  "oli_job_numbers" varchar(1000),
   "oli_add_user_id" varchar(500),
   "oli_add_date" date,
   "oli_mtc_user_id" varchar(500),
@@ -192,13 +193,14 @@ create table "rmm_invoice_line_item" (
 
 create table "rmm_shop_inventory" (
   "rmm_shop_inventory_id" SERIAL PRIMARY KEY not null,
-  "rmm_shop_id" number,
+  "rmm_shop_id" integer,
+  "si_status" varchar(100),
   "si_reviewer1" varchar(500),
   "si_reviewer2" varchar(500),
   "si_month" varchar(100),
   "si_year" varchar(100),
   "si_completed_date" date,
-  "si_status" varchar(100),
+  "si_total_value" decimal,
   "si_add_user_id" varchar(500),
   "si_add_date" date,
   "si_mtc_user_id" varchar(500),
@@ -208,9 +210,11 @@ create table "rmm_shop_inventory" (
 create table "rmm_shop_inventory_product" (
   "rmm_product_id" SERIAL REFERENCES rmm_product("rmm_product_id") not null,
   "rmm_shop_inventory_id" SERIAL REFERENCES rmm_shop_inventory("rmm_shop_inventory_id"),
-  "sip_count" decimal,
-  "sip_weight" decimal,
   "sip_status" varchar(100),
+  "sip_count" decimal,
+  "sip_dwt" decimal,
+  "sip_cost" decimal,
+  "sip_total_value" decimal,
   "sip_add_user_id" varchar(500),
   "sip_add_date" date,
   "sip_mtc_user_id" varchar(500),
@@ -220,6 +224,7 @@ create table "rmm_shop_inventory_product" (
 
 create table "rmm_metal_rates" (
   "rmm_metal_rate_id" SERIAL not null,
+  "rmm_supply_category_id" integer,
   "mr_category" varchar(200),
   "mr_metal_type" varchar(500),
   "mr_metal_name" varchar(500),

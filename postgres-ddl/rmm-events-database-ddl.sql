@@ -12,3 +12,20 @@ create table "rmm_events" (
   "e_mtc_user_id" varchar(500),
   "e_mtc_date" date
 );
+
+create table "rmm_notifications" (
+  "rmm_notification_id" SERIAL PRIMARY KEY not null,
+  "rmm_user_id" varchar(500),
+  "rmm_shop_id" number,
+  "n_date" date,
+  "n_type" varchar(500),
+  "n_type_id" decimal,
+  "n_title" varchar(500),
+  "n_label" varchar(500),
+  "n_description" varchar(4000),
+  "n_action" varchar(4000),
+  "n_add_user_id" varchar(500),
+  "n_add_date" date,
+  "n_mtc_user_id" varchar(500),
+  "n_mtc_date" date
+);
