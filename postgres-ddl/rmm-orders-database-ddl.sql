@@ -86,7 +86,8 @@ create table "rmm_product" (
   "p_mtc_date" date,
   "p_size_mm" varchar(200),
   "p_size_ct" varchar(200),
-  "p_sku" varchar(1000)
+  "p_sku" varchar(1000),
+  "p_quantity" integer
 );
 
 create table "rmm_order" (
