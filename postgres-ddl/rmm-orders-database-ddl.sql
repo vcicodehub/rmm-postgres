@@ -87,7 +87,8 @@ create table "rmm_product" (
   "p_size_mm" varchar(200),
   "p_size_ct" varchar(200),
   "p_sku" varchar(1000),
-  "p_quantity" integer
+  "p_quantity" integer,
+  "p_is_gemstone" char(1)
 );
 
 create table "rmm_order" (
