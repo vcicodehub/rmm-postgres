@@ -63,7 +63,8 @@ create table "rmm_supply_categories" (
   "sc_add_date" date,
   "sc_mtc_user_id" varchar(500),
   "sc_mtc_date" date,
-  "sc_type" varchar(200)
+  "sc_type" varchar(200),
+  "sc_supply_type" varchar(500)
 );
 
 create table "rmm_product" (

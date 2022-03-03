@@ -129,7 +129,9 @@ create table "rmm_vendor_ftp" (
   "vftp_add_user_id" varchar(500),
   "vftp_add_date" date,
   "vftp_mtc_user_id" varchar(500),
-  "vftp_mtc_date" date
+  "vftp_mtc_date" date,
+  "vftp_public_key" bytea,
+  "vftp_public_key_filename" varchar(1000)
 );
 
 create table "rmm_vendor_file" (
