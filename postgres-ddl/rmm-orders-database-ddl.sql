@@ -117,7 +117,9 @@ create table "rmm_order" (
   "o_vendor_name" varchar(500),
   "o_shop_number" varchar(100),
   "o_from_shop_number" varchar(100),
-  "o_to_shop_number" varchar(100)
+  "o_to_shop_number" varchar(100),
+  "o_to_shop_number" varchar(100),
+  "o_transfer_status" varchar(200)
 );
 
 create table "rmm_receipt" (
