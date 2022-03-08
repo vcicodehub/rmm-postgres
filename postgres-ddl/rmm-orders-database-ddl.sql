@@ -214,7 +214,8 @@ create table "rmm_shop_inventory" (
   "si_year" varchar(100),
   "si_completed_date" date,
   "si_total_value" decimal,
-  "si_notes" varchar(4000)
+  "si_notes" varchar(4000),
+  "si_approved_by" varchar(500)
 );
 
 create table "rmm_shop_inventory_product" (
