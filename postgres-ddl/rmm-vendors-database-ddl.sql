@@ -16,7 +16,7 @@ create table "rmm_vendor" (
   "v_requires_srsp" char(1) not null,
   "v_requires_kimberly" char(1) not null,
   "v_send_flip_file" char(1) not null,
-  "v_payterm_terms" varchar(1000),
+  "v_payment_terms" varchar(1000),
   "v_dm_approval_req" char(1) not null,
   "v_add_user_id" varchar(500),
   "v_add_date" date,
