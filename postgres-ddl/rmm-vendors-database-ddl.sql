@@ -38,7 +38,7 @@ create table "rmm_vendor_invoice_error" (
   "vie_line_number" integer,
   "vie_message" varchar(4000),
   "vie_po_date" date,
-  "vie_po_number" integer,
+  "vie_po_number" varchar(200),
   "vie_processed" char(1),
   "vie_quality" varchar(100),
   "vie_quantity" integer,

@@ -18,6 +18,7 @@ create table "rmm_shop" (
   "s_mtc_user_id" varchar(500),
   "s_mtc_date" date,
   "s_email_address" varchar(1000),
-  "s_phone_number" varchar(50)
+  "s_phone_number" varchar(50),
+  "s_comment" varchar(4000)
 );
 

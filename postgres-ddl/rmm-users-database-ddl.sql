@@ -75,3 +75,9 @@ create table "rmm_search_profile_criteria" (
   "spc_mtc_user_id" varchar(500),
   "spc_mtc_date" date
 );
+
+create table "rmm_hierarchy" (
+  "rmm_hierarchy_id" serial not null,
+  "h_name" varchar(50),
+  "h_data" bytea
+);

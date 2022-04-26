@@ -1,3 +1,6 @@
+create sequence rmm_order_number_supply_seq start 100000;
+create sequence rmm_order_number_transfer_seq start 100000;
+
 create table "rmm_inventory_report" (
   "rmm_inventory_report_id" SERIAL PRIMARY KEY not null,
   "rmm_shop_id" SERIAL not null,
@@ -120,7 +123,9 @@ create table "rmm_order" (
   "o_shop_number" varchar(100),
   "o_from_shop_number" varchar(100),
   "o_to_shop_number" varchar(100),
-  "o_transfer_status" varchar(200)
+  "o_transfer_status" varchar(200),
+  "o_request_status" varchar(200),
+  "o_ordered_status" varchar(200)
 );
 
 create table "rmm_order_line_item" (
@@ -221,6 +226,7 @@ create table "rmm_shop_inventory" (
   "rmm_shop_inventory_id" SERIAL PRIMARY KEY not null,
   "rmm_inventory_id" SERIAL REFERENCES rmm_inventory("rmm_inventory_id"),
   "rmm_shop_id" integer,
+  "si_shop_number" varchar(500),
   "si_status" varchar(100),
   "si_reviewer1" varchar(500),
   "si_reviewer2" varchar(500),
