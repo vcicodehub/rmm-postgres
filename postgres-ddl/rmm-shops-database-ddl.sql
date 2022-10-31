@@ -22,3 +22,15 @@ create table "rmm_shop" (
   "s_comment" varchar(4000)
 );
 
+create table "rmm_feature_toggle" (
+  "rmm_feature_toggle_id" SERIAL PRIMARY KEY not null,
+  "ft_shop_number" varchar(100),
+  "ft_employee_number" varchar(100),
+  "ft_features" varchar(4000),
+  "ft_add_user_id" varchar(500),
+  "ft_add_date" date,
+  "ft_mtc_user_id" varchar(500),
+  "ft_mtc_date" date
+);
+
+

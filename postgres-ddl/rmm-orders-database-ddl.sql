@@ -1,6 +1,6 @@
 create sequence rmm_order_number_supply_seq start 100000;
 create sequence rmm_order_number_transfer_seq start 100000;
-create sequence rmm_product_key_seq start 100000;
+create sequence rmm_product_key_seq start 10000000;
 
 create table "rmm_inventory_report" (
   "rmm_inventory_report_id" SERIAL PRIMARY KEY not null,
@@ -240,6 +240,7 @@ create table "rmm_invoice" (
   "i_grand_total" decimal,
   "i_sent_to_sap" char(1),
   "i_sent_to_sap_date" date,
+  "i_sent_to_sap_batch_num" varchar(200),
   "i_pay_to_sap" char(1),
   "i_add_user_id" varchar(500),
   "i_add_date" date,
@@ -283,6 +284,7 @@ create table "rmm_shop_inventory_product" (
   "sip_count" decimal,
   "sip_status" varchar(100),
   "sip_total_value" decimal,
+  "sip_job_numbers" varchar(1000),
   "sip_add_user_id" varchar(500),
   "sip_add_date" date,
   "sip_mtc_user_id" varchar(500),
