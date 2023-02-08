@@ -136,7 +136,7 @@ create table "rmm_product" (
   "p_description" varchar(4000),
   "p_cost" decimal,
   "p_status" varchar(100),
-  "p_name" varchar(200),
+  "p_name" varchar(1000),
   "p_quality" varchar(100),
   "p_cut" varchar(100),
   "p_shape" varchar(100),
@@ -147,6 +147,7 @@ create table "rmm_product" (
   "p_add_date" date,
   "p_mtc_user_id" varchar(500),
   "p_mtc_date" date,
+  "p_size" varchar(200),
   "p_size_mm" varchar(200),
   "p_size_ct" varchar(200),
   "p_sku" varchar(1000),
@@ -315,4 +316,26 @@ create table "rmm_types" (
   "pt_add_date" date,
   "pt_mtc_user_id" varchar(500),
   "pt_mtc_date" date
+);
+
+create table "rmm_types_xref" (
+  "rmm_type_parent_id" integer REFERENCES rmm_types("rmm_type_id") not null,
+  "rmm_type_child_id" integer REFERENCES rmm_types("rmm_type_id") not null,
+  "tx_type_status" varchar(500),
+  "tx_add_user_id" varchar(500),
+  "tx_add_date" date,
+  "tx_mtc_user_id" varchar(500),
+  "tx_mtc_date" date,
+  PRIMARY KEY(rmm_type_parent_id, rmm_type_child_id)
+);
+
+create table "rmm_batch_etl" (
+  "rmm_batch_etl_id" SERIAL PRIMARY KEY not null,
+  "be_status" varchar(100),
+  "be_date" timestamp,
+  "be_comment" varchar(4000),
+  "be_add_user_id" varchar(500),
+  "be_add_date" timestamp,
+  "be_mtc_user_id" varchar(500),
+  "be_mtc_date" timestamp
 );
