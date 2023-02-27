@@ -28,6 +28,7 @@ create table "srs_bundles" (
   "b_bundle_type" varchar(200),
   "b_metal_type" varchar(200),
   "b_jewelry_type" varchar(200),
+  "b_job_code" integer,
   "b_add_user_id" varchar(500),
   "b_add_date" timestamp,
   "b_mtc_user_id" varchar(500),
@@ -52,4 +53,15 @@ create table "srs_job_code_categories" (
   "jcc_add_date" timestamp,
   "jcc_mtc_user_id" varchar(500),
   "jcc_mtc_date" timestamp
+);
+
+create table "srs_bundle_metal_types" (
+  "srs_bundle_metal_types_id" SERIAL PRIMARY KEY not null,
+  "bmt_metal_type" varchar(500),
+  "bmt_short_name" varchar(100),
+  "bmt_bundle_metal_type" varchar(500),
+  "bmt_add_user_id" varchar(500),
+  "bmt_add_date" timestamp,
+  "bmt_mtc_user_id" varchar(500),
+  "bmt_mtc_date" timestamp
 );
