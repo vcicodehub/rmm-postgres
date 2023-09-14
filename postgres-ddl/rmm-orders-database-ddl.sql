@@ -155,6 +155,17 @@ create table "rmm_product" (
   "p_is_gemstone" char(1)
 );
 
+create table "rmm_product_sku" (
+  "rmm_product_sku_id" SERIAL PRIMARY KEY not null,
+  "rmm_product_id" SERIAL REFERENCES rmm_product("rmm_product_id"),
+  "ps_sku" varchar(500),
+  "ps_status" varchar(100),
+  "ps_add_user_id" varchar(500),
+  "ps_add_date" date,
+  "ps_mtc_user_id" varchar(500),
+  "ps_mtc_date" date
+);
+
 create table "rmm_order" (
   "rmm_order_id" SERIAL PRIMARY KEY not null,
   "rmm_user_id" varchar(500),
@@ -168,6 +179,7 @@ create table "rmm_order" (
   "o_message" varchar(4000),
   "o_is_received" char(1),
   "o_is_delivered" char(1),
+  "o_is_custom" char(1),
   "o_repair_job_num" varchar(500),
   "o_series" varchar(12),
   "o_approved_by" varchar(500),
@@ -208,30 +220,6 @@ create table "rmm_order_line_item" (
   "oli_status" varchar(100)
 );
 
-create table "rmm_receipt" (
-  "rmm_receipt_id" SERIAL PRIMARY KEY not null,
-  "rmm_order_id" SERIAL REFERENCES rmm_order("rmm_order_id"),
-  "r_date" date,
-  "r_status" varchar(100),
-  "r_add_user_id" varchar(500),
-  "r_add_date" date,
-  "r_mtc_user_id" varchar(500),
-  "r_mtc_date" date
-);
-
-create table "rmm_receipt_line_item" (
-  "rmm_receipt_line_item_id" SERIAL PRIMARY KEY not null,
-  "rmm_receipt_id" SERIAL REFERENCES rmm_receipt("rmm_receipt_id"),
-  "rli_date" date,
-  "rli_status" varchar(100),
-  "rli_quantity" decimal,
-  "rli_uom" varchar(100),
-  "rli_add_user_id" varchar(500),
-  "rli_add_date" date,
-  "rli_mtc_user_id" varchar(500),
-  "rli_mtc_date" date
-);
-
 create table "rmm_invoice" (
   "rmm_invoice_id" SERIAL PRIMARY KEY not null,
   "rmm_order_id" SERIAL REFERENCES rmm_order("rmm_order_id"),
@@ -243,6 +231,8 @@ create table "rmm_invoice" (
   "i_sent_to_sap_date" date,
   "i_sent_to_sap_batch_num" varchar(200),
   "i_pay_to_sap" char(1),
+  "i_original_grand_total" numeric,
+  "i_original_currency" varchar(30),
   "i_add_user_id" varchar(500),
   "i_add_date" date,
   "i_mtc_user_id" varchar(500),
@@ -260,6 +250,8 @@ create table "rmm_invoice_line_item" (
   "ili_quantity" decimal,
   "ili_tax_amount" decimal,
   "ili_total_amount" decimal,
+  "ili_original_amount" numeric,
+  "ili_original_currency" varchar(30),
   "ili_add_user_id" varchar(500),
   "ili_add_date" date,
   "ili_mtc_user_id" varchar(500),
@@ -312,6 +304,7 @@ create table "rmm_types" (
   "pt_type_category" varchar(200),
   "pt_type_code" varchar(200),
   "pt_type_name" varchar(500),
+  "pt_sequence_num" integer,
   "pt_add_user_id" varchar(500),
   "pt_add_date" date,
   "pt_mtc_user_id" varchar(500),
@@ -338,4 +331,16 @@ create table "rmm_batch_etl" (
   "be_add_date" timestamp,
   "be_mtc_user_id" varchar(500),
   "be_mtc_date" timestamp
+);
+
+create table "rmm_currency_exchange" (
+  "rmm_currency_exchange_id" SERIAL PRIMARY KEY not null,
+  "ce_from_currency" varchar(30),
+  "ce_to_currency" varchar(30),
+  "ce_exchange_date" timestamp,
+  "ce_exchange_rate" numeric,
+  "ce_add_user_id" varchar(500),
+  "ce_add_date" timestamp,
+  "ce_mtc_user_id" varchar(500),
+  "ce_mtc_date" timestamp
 );

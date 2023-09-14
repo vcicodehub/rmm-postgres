@@ -28,6 +28,7 @@ create table "rmm_vendor_invoice_error" (
   "rmm_vendor_invoice_error_id" serial not null,
   "rmm_order_id" integer,
   "rmm_invoice_id" integer,
+  "rmm_shop_id" integer,
   "vie_amount" decimal,
   "vie_color" varchar(100),
   "vie_cut" varchar(100),
@@ -78,7 +79,8 @@ create table "rmm_vendor_invoice_error" (
   "vie_alloy" varchar(200),
   "vie_active" varchar(200),
   "vie_rpr_vendor_order_id" varchar(200),
-  "rmm_shop_id" integer
+  "vie_original_currency" varchar(30),
+  "vie_original_amount" numeric
 );
 
 create table "rmm_vendor_order_error" (
@@ -154,5 +156,18 @@ create table "rmm_vendor_file" (
   "vf_add_date" date,
   "vf_mtc_user_id" varchar(500),
   "vf_mtc_date" date
+);
+
+create table "rmm_vendor_attribute_mapper" (
+  "rmm_vendor_attribute_mapper_id" serial not null,
+  "vam_vendor_number" varchar(100),
+  "vam_doc_type" varchar(100),
+  "vam_element" varchar(500),
+  "vam_value" varchar(500),
+  "vam_mapping" varchar(500),
+  "vam_add_user_id" varchar(500),
+  "vam_add_date" date,
+  "vam_mtc_user_id" varchar(500),
+  "vam_mtc_date" date
 );
 

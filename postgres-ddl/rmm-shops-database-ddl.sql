@@ -13,13 +13,15 @@ create table "rmm_shop" (
   "s_senior_director" varchar(500),
   "s_exclude_from_inv" char(1),
   "s_keep_prv_month_inv" char(1),
+  "s_exclude_from_sap" char(1),
   "s_add_user_id" varchar(500),
   "s_add_date" timestamp,
   "s_mtc_user_id" varchar(500),
   "s_mtc_date" timestamp,
   "s_email_address" varchar(1000),
   "s_phone_number" varchar(50),
-  "s_comment" varchar(4000)
+  "s_comment" varchar(4000),
+  "s_sap_company_code" char(2)
 );
 
 create table "rmm_feature" (

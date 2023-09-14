@@ -65,3 +65,17 @@ create table "srs_bundle_metal_types" (
   "bmt_mtc_user_id" varchar(500),
   "bmt_mtc_date" timestamp
 );
+
+CREATE ROLE srs LOGIN PASSWORD 'WV+eN+HFQ-eH2_5w';
+CREATE ROLE srs_role;
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA srs TO srs_role;
+GRANT USAGE ON ALL SEQUENCES IN SCHEMA srs TO srs_role;
+GRANT srs_role TO srs;
+
+CREATE ROLE srs_test LOGIN PASSWORD 'srs_test';
+CREATE ROLE test;
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA srs TO test;
+GRANT USAGE ON ALL SEQUENCES IN SCHEMA srs TO test;
+GRANT test TO srs_test;
