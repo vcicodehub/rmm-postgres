@@ -1,13 +1,33 @@
 create database srs_custom_jewelry;
 
+create table "srs_cj_job_queue" (
+  "srs_cj_job_queue_id" SERIAL PRIMARY KEY not null,
+  "jq_job_number" varchar(100),
+  "jq_shop_number" varchar(100),
+  "jq_store_number" varchar(100),
+  "jq_status" varchar(100),
+  "jq_message" varchar(4000),
+  "jq_json" bytea,
+  "jq_retry_count" integer,
+  "jq_retry_timestamp" timestamp,
+  "jq_add_user_id" varchar(500),
+  "jq_add_date" timestamp,
+  "jq_mtc_user_id" varchar(500),
+  "jq_mtc_date" timestamp
+);
+
 create table "srs_cj_custom_job" (
   "srs_cj_custom_job_id" SERIAL PRIMARY KEY not null,
   "cj_status" varchar(100),
   "cj_version" integer,
   "cj_version_status" varchar(100),
+  "cj_job_type" varchar(100),
   "cj_job_number" varchar(100),
+  "cj_job_status" varchar(100),
+  "cj_job_id" integer,
   "cj_shop_number" varchar(100),
   "cj_store_number" varchar(100),
+  "cj_division" varchar(100),
   "cj_order_number" varchar(100),
   "cj_job_code" varchar(100),
   "cj_piece_type" varchar(100),
@@ -27,6 +47,27 @@ create table "srs_cj_custom_job" (
   "cj_dimension_e" varchar(100),
   "cj_dimension_f" varchar(100),
   "cj_dimension_g" varchar(100),
+  "cj_shape" varchar(100),
+  "cj_fill" varchar(100),
+  "cj_bail_type" varchar(100),
+  "cj_quantity" varchar(100),
+  "cj_components" varchar(100),
+  "cj_cat_vendor" varchar(100),
+  "cj_cat_sku" varchar(100),
+  "cj_cat_description" varchar(4000),
+  "cj_cat_jewelry_state" varchar(100),
+  "cj_cat_metal_type" varchar(100),
+  "cj_cat_quantity" varchar(100),
+  "cj_cat_size" varchar(100),
+  "cj_cat_components" varchar(100),
+  "cj_cat_primary_stone_count" varchar(100),
+  "cj_cat_primary_stone_shape" varchar(100),
+  "cj_cat_primary_stone_size" varchar(100),
+  "cj_cat_accent_product_type" varchar(100),
+  "cj_cat_accent_stone_type" varchar(100),
+  "cj_cat_accent_stone_shape" varchar(100),
+  "cj_cat_accent_stone_color" varchar(100),
+  "cj_cat_accent_stone_clarity" varchar(100),
   "cj_engraving_required" char(1),
   "cj_engraving_charge" decimal,
   "cj_nonmelee_stones" char(1),
@@ -37,10 +78,26 @@ create table "srs_cj_custom_job" (
   "cj_attachment_notes" varchar(4000),
   "cj_employee_notes" varchar(4000),
   "cj_material_notes" varchar(4000),
+  "cj_label_generated" char(1),
+  "cj_tracking_number" varchar(100),
+  "cj_version_received_from" varchar(500),
+  "cj_version_sent_to" varchar(500),
+  "cj_version_date" timestamp,
   "cj_add_user_id" varchar(500),
   "cj_add_date" timestamp,
   "cj_mtc_user_id" varchar(500),
   "cj_mtc_date" timestamp
+);
+
+create table "srs_cj_shipping_label" (
+  "srs_cj_shipping_label_id" SERIAL PRIMARY KEY not null,
+  "srs_cj_custom_job_id" SERIAL REFERENCES srs_cj_custom_job("srs_cj_custom_job_id"),
+  "sl_status" varchar(100),
+  "sl_pdf" bytea,
+  "vj_add_user_id" varchar(500),
+  "vj_add_date" timestamp,
+  "vj_mtc_user_id" varchar(500),
+  "vj_mtc_date" timestamp
 );
 
 create table "srs_cj_vendor_job" (
@@ -128,6 +185,7 @@ create table "srs_cj_material" (
   "srs_cj_custom_job_id" SERIAL REFERENCES srs_cj_custom_job("srs_cj_custom_job_id"),
   "ma_status" varchar(100),
   "ma_sequence" integer,
+  "ma_locked" char(1),
   "ma_signet_merch" char(1),
   "ma_sku" varchar(100),
   "ma_type" varchar(100),
@@ -150,6 +208,20 @@ create table "srs_cj_material" (
   "ma_mtc_user_id" varchar(500),
   "ma_mtc_date" timestamp
 );
+
+create table "srs_cj_material_metal" (
+  "srs_cj_material_metal_id" SERIAL PRIMARY KEY not null,
+  "srs_cj_material_id" SERIAL REFERENCES srs_cj_material("srs_cj_material_id"),
+  "mm_status" varchar(100),
+  "mm_type" varchar(100),  
+  "mm_carat" varchar(100),
+  "mm_sequence" integer,
+  "mm_add_user_id" varchar(500),
+  "mm_add_date" timestamp,
+  "mm_mtc_user_id" varchar(500),
+  "mm_mtc_date" timestamp
+);
+
 
 create table "srs_cj_image" (
   "srs_cj_images_id" SERIAL PRIMARY KEY not null,
@@ -191,6 +263,17 @@ create table "srs_cj_types_xref" (
   PRIMARY KEY(srs_cj_types_parent_id, srs_cj_types_child_id)
 );
 
+create table "srs_cj_attribute_mapper" (
+  "srs_cj_attribute_mapper_id" serial not null,
+  "am_category" varchar(100),
+  "am_element" varchar(500),
+  "am_value" varchar(500),
+  "am_mapping" varchar(500),
+  "am_add_user_id" varchar(500),
+  "am_add_date" timestamp,
+  "am_mtc_user_id" varchar(500),
+  "am_mtc_date" timestamp
+);
 
 CREATE ROLE srs LOGIN PASSWORD 'WV+eN+HFQ-eH2_5w';
 CREATE ROLE srs_role;

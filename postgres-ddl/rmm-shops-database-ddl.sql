@@ -8,6 +8,7 @@ create table "rmm_shop" (
   "s_addr_city" varchar(500),
   "s_addr_state" varchar(3),
   "s_addr_zip" varchar(10),
+  "s_addr_country" varchar(100),
   "s_status" varchar(100),
   "s_district_manager" varchar(500),
   "s_senior_director" varchar(500),

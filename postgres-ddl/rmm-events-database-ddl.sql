@@ -35,3 +35,32 @@ create table "rmm_notifications" (
   "n_mtc_user_id" varchar(500),
   "n_mtc_date" date
 );
+
+CREATE TABLE rmm_app_events (
+  "rmm_app_event_id" SERIAL NOT NULL, 
+  "ae_application" VARCHAR(500), 
+  "ae_user_id" VARCHAR(500), 
+  "ae_date" TIMESTAMP, 
+  "ae_type" VARCHAR(500), 
+  "ae_type_id" VARCHAR(200), 
+  "ae_label" VARCHAR(500), 
+  "ae_description" VARCHAR(4000), 
+  "ae_add_user_id" VARCHAR(500), 
+  "ae_add_date" DATE, 
+  "ae_mtc_user_id" VARCHAR(500), 
+  "ae_mtc_date" DATE, 
+  PRIMARY KEY (rmm_app_event_id)
+);
+
+CREATE TABLE rmm_email_notifications (
+  "rmm_email_notifications_id" SERIAL NOT NULL, 
+  "n_status" VARCHAR(100), 
+  "n_application" VARCHAR(500), 
+  "n_type" VARCHAR(500), 
+  "n_email_address" VARCHAR(1000), 
+  "n_add_user_id" VARCHAR(500), 
+  "n_add_date" DATE, 
+  "n_mtc_user_id" VARCHAR(500), 
+  "n_mtc_date" DATE, 
+  PRIMARY KEY (rmm_email_notifications_id)
+);

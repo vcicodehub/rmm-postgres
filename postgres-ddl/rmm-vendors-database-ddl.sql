@@ -6,11 +6,13 @@ create table "rmm_vendor" (
   "v_name" varchar(1000),
   "v_validation_req" char(1),
   "v_email_addr" varchar(500),
+  "v_phone_number" varchar(100),
   "v_addr_line1" varchar(500),
   "v_addr_line2" varchar(500),
   "v_addr_city" varchar(500),
-  "v_addr_state" varchar(3),
   "v_addr_zip" varchar(10),
+  "v_addr_state" varchar(3),
+  "v_addr_country" varchar(100),
   "v_order_method" varchar(100),
   "v_cadcam" char(1) not null,
   "v_requires_srsp" char(1) not null,
@@ -18,6 +20,7 @@ create table "rmm_vendor" (
   "v_send_flip_file" char(1) not null,
   "v_payment_terms" varchar(1000),
   "v_dm_approval_req" char(1) not null,
+  "v_display_for" varchar(50),
   "v_add_user_id" varchar(500),
   "v_add_date" date,
   "v_mtc_user_id" varchar(500),
@@ -171,3 +174,16 @@ create table "rmm_vendor_attribute_mapper" (
   "vam_mtc_date" date
 );
 
+CREATE TABLE "rmm_vendor_list" (
+  "rmm_vendor_list_id" SERIAL PRIMARY KEY NOT NULL,
+  "vl_name" varchar(100),
+  "vl_srs_role_ref" varchar(100) 
+);
+
+ALTER TABLE rmm_vendor ADD PRIMARY KEY ("rmm_vendor_id");
+
+CREATE TABLE "rmm_vendor_list_vendors" (
+  "rmm_vendor_list_vendors_id" SERIAL PRIMARY KEY NOT NULL,
+  "vlv_list_id" INTEGER REFERENCES rmm_vendor_list("rmm_vendor_list_id"),
+  "vlv_vendor_id" INTEGER REFERENCES rmm_vendor("rmm_vendor_id")
+);
